@@ -16,6 +16,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameObject aimImage;
     // Start is called before the first frame update
+    [SerializeField]
+    private LayerMask tagetLayer;
+    [SerializeField]
+    private GameObject aimObj;
+    [SerializeField]
+    private float aimObjDis = 20f;
     void Start()
     {
         input = GetComponent<StarterAssetsInputs>();
@@ -28,10 +34,36 @@ public class PlayerManager : MonoBehaviour
     }
     private void AimCheck()
     {
+
+        
+
+        
         if(input.aim)
         {
             aimCam.gameObject.SetActive(true);
             aimImage.SetActive(true);
+            Vector3 targetPosition = Vector3.zero;
+            Transform camTransform = Camera.main.transform;                
+            RaycastHit hit;
+
+            if(Physics.Raycast(camTransform.position, camTransform.forward, out hit, Mathf.Infinity, tagetLayer))
+            {
+                //Debug.Log("Name : " + hit.transform.gameObject.name);
+                targetPosition = hit.point;
+                aimObj.transform.position = hit.point;
+            }
+            else
+            {
+                targetPosition = camTransform.position + camTransform.forward * aimObjDis;
+                aimObj.transform.position = camTransform.position + camTransform.forward * aimObjDis;
+            }
+
+            Vector3 targetAim = targetPosition;
+
+            targetAim.y = transform.position.y;
+            Vector3 aimDir = (targetAim - transform.position).normalized;
+
+            transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
         }
         else
         {
