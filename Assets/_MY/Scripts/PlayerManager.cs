@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using StarterAssets;
 using Cinemachine;
 
@@ -9,7 +10,7 @@ public class PlayerManager : MonoBehaviour
 {
     private StarterAssetsInputs input;
     private ThirdPersonController controller;
-    private Animater anim;
+    private Animator anim;
 
     [Header("Aim")]
     [SerializeField]
@@ -24,6 +25,14 @@ public class PlayerManager : MonoBehaviour
     private GameObject aimObj;
     [SerializeField]
     private float aimObjDis = 20f;
+
+    [Header("IK")]
+    [SerializeField]
+    private Rig handRig;
+    [SerializeField]
+    private Rig aimRig;
+
+
     void Start()
     {
         input = GetComponent<StarterAssetsInputs>();
@@ -39,6 +48,23 @@ public class PlayerManager : MonoBehaviour
     }
     private void AimCheck()
     {
+        if(input.reroad)
+        {
+            input.reroad = false;
+            if(controller.isReroad)
+            {
+                return;
+            }
+            AimControll(false);
+            SetRigWeight(0);
+            anim.SetLayerWeight(1, 1);
+            anim.SetTrigger("Reroad");
+            controller.isReroad = true;
+        }
+        if(controller.isReroad)
+        {
+            return;
+        }
     
         if(input.aim)
         {
@@ -66,12 +92,23 @@ public class PlayerManager : MonoBehaviour
             Vector3 aimDir = (targetAim - transform.position).normalized;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDir, Time.deltaTime * 50f);
+
+            SetRigWeight(1);
+            if (input.shoot)
+            {
+                anim.SetBool("Shoot",true);
+            }
+            else
+            {
+                anim.SetBool("Shoot", false);
+            }
         }
         else
         {
             AimControll(false);
-            
+            SetRigWeight(0);
             anim.SetLayerWeight(1,0);
+            anim.SetBool("Shoot", false);
         }
     }
     private void AimControll(bool isCheck)
@@ -79,5 +116,17 @@ public class PlayerManager : MonoBehaviour
         aimCam.gameObject.SetActive(isCheck);
             aimImage.SetActive(isCheck);
             controller.isAimMove = isCheck;
+    }
+    public void Reroad()
+    {
+    //    Debug.Log("Reroad");
+        controller.isReroad = false;
+        SetRigWeight(1);
+        anim.SetLayerWeight(1, 0);
+    }
+    private void SetRigWeight(float weight)
+    {
+        aimRig.weight = weight;
+        handRig.weight = weight;
     }
 }
