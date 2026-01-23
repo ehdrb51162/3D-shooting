@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
 {
     private StarterAssetsInputs input;
     private ThirdPersonController controller;
+    private Animater anim;
 
     [Header("Aim")]
     [SerializeField]
@@ -27,6 +28,7 @@ public class PlayerManager : MonoBehaviour
     {
         input = GetComponent<StarterAssetsInputs>();
         controller = GetComponent<ThirdPersonController>();
+        anim = GetComponent<Animator>();
         
     }
 
@@ -41,7 +43,7 @@ public class PlayerManager : MonoBehaviour
         if(input.aim)
         {
             AimControll(true);
-            
+            anim.SetLayerWeight(1,1);
             Vector3 targetPosition = Vector3.zero;
             Transform camTransform = Camera.main.transform;                
             RaycastHit hit;
@@ -68,6 +70,8 @@ public class PlayerManager : MonoBehaviour
         else
         {
             AimControll(false);
+            
+            anim.SetLayerWeight(1,0);
         }
     }
     private void AimControll(bool isCheck)
