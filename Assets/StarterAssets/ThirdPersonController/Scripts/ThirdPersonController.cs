@@ -217,7 +217,7 @@ namespace StarterAssets
         {
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
-            if (isAimMove || isReroad)
+            if(isAimMove || isReroad)
             {
                 targetSpeed = MoveSpeed;
             }
@@ -267,11 +267,10 @@ namespace StarterAssets
                     RotationSmoothTime);
 
                 // rotate to face input direction relative to camera position
-                if (!isAimMove)
+                if(!isAimMove)
                 {
                     transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
                 }
-                
             }
 
 

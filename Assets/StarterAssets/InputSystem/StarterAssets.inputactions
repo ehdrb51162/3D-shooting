@@ -44,7 +44,7 @@
                 {
                     "name": "Aim",
                     "type": "PassThrough",
-                    "id": "8c365198-02ae-4c55-a34f-79c64abe0bfa",
+                    "id": "27256981-177b-45e7-b32d-82787b29a905",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -53,7 +53,7 @@
                 {
                     "name": "Shoot",
                     "type": "PassThrough",
-                    "id": "f403c1e1-26f7-4a80-94f0-589bab061d32",
+                    "id": "ab5b9d6b-78fb-4c17-9a64-b3b5275a58ce",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -62,7 +62,7 @@
                 {
                     "name": "Reroad",
                     "type": "Button",
-                    "id": "e9c6ccc8-83a0-4790-a9b2-15ca64520927",
+                    "id": "3746b667-b7b4-4c4d-b9c6-db4c498f9c75",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -248,7 +248,7 @@
                 },
                 {
                     "name": "",
-                    "id": "97530550-80df-496e-9032-ec81d1a167e9",
+                    "id": "f5f6217b-872a-428c-95cf-61ca1ba6d1c9",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
@@ -259,7 +259,7 @@
                 },
                 {
                     "name": "",
-                    "id": "dffc00a1-f3ad-4ec0-8970-75c72e764273",
+                    "id": "7ee29703-234c-4c95-aa43-6064a49b1ab4",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -270,7 +270,7 @@
                 },
                 {
                     "name": "",
-                    "id": "98f30720-2f55-4b61-887d-03e4b6a529a6",
+                    "id": "3890fa55-8991-4bec-bd96-e63fad7df1fb",
                     "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",

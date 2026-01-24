@@ -16,6 +16,7 @@ namespace StarterAssets
 		public bool shoot;
 		public bool reroad;
 
+
 		[Header("Movement Settings")]
 		public bool analogMovement;
 
@@ -46,7 +47,6 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-		
 		public void OnAim(InputValue value)
 		{
 			AimInput(value.isPressed);
@@ -55,7 +55,6 @@ namespace StarterAssets
 		{
 			ShootInput(value.isPressed);
 		}
-
 		public void OnReroad(InputValue value)
 		{
 			ReroadInput(value.isPressed);
