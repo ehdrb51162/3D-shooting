@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
     {
         bulletText.text = currntBullet + " / " + maxBullet;
     }
-    public void Shooting(Vector3 targetPosition)
+    public void Shooting(Vector3 targetPosition, Enemy enemy)
     {
         curruntShootDelay += Time.deltaTime;
         if(curruntShootDelay < maxShootDelay || currntBullet <=0)
@@ -52,14 +54,34 @@ public class GameManager : MonoBehaviour
         
         currntBullet -= 1;
         curruntShootDelay = 0;
-        Instantiate(weaponFlashFX, bulletPoint);
-        Instantiate(bulletCaseFX, bulletCasePoint);
         Vector3 aim = (targetPosition - bulletPoint.position).normalized;
+        //Instantiate(weaponFlashFX, bulletPoint);
+        GameObject flashFX = PoolManager.instance.ActivateObj(1);
+        SetObjPosition(flashFX,bulletPoint);
+        flashFX.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
+        //Instantiate(bulletCaseFX, bulletCasePoint);
+        GameObject caseFX = PoolManager.instance.ActivateObj(2);
+        SetObjPosition(caseFX,bulletCasePoint);
+        
         Instantiate(bulletObj, bulletPoint.position, Quaternion.LookRotation(aim,Vector3.up));
+        GameObject prefabToSpawn = PoolManager.instance.ActivateObj(0);
+        SetObjPosition(prefabToSpawn, bulletPoint);
+        prefabToSpawn.transform.rotation = Quaternion.LookRotation(aim, Vector3.up);
+        
+        // Raycast
+        /*
+        if(enemy != null && enemy.enemyCurrntHp>0)
+        {
+            enemy.enemyCurrntHp -= 1;
+            Debug.Log("enemy HP : "+ enemy.enemyCurrntHp);
+        }
+        */
     }
     public void ReroadClip()
     {
         Instantiate(weaponClipFX,weaponClipPoint);
+        GameObject clipFX = PoolManager.instance.ActivateObj(3);
+        SetObjPosition(clipFX, weaponClipPoint);
         InitBullet();
     }
 
@@ -68,4 +90,8 @@ public class GameManager : MonoBehaviour
         currntBullet = maxBullet;
     }
 
+    private void SetObjPosition(GameObject obj, Transform targetTransform)
+    {
+        obj.transform.position = targetTransform.position;
+    }
 }
