@@ -12,8 +12,9 @@ public class PoolManager : MonoBehaviour
     private List<GameObject>[] objPools;
     void Start()
     {
-        InitObjPool();
         instance = this;    
+        InitObjPool();
+        
     }
 
     private void InitObjPool()

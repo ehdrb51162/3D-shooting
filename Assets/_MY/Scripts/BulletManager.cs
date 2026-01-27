@@ -36,6 +36,10 @@ public class BulletManager : MonoBehaviour
         destroyTime = 3;
     }
     private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<Enemy>().enemyCurrntHp -= 1;
+        }
         DestroyBullet();
     }
 }
