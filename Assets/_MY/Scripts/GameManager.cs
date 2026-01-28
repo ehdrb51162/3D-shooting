@@ -34,11 +34,27 @@ public class GameManager : MonoBehaviour
     private Transform weaponClipPoint;
     [SerializeField]
     private GameObject weaponClipFX;
+
+    [Header("Enemy")]
+    [SerializeField]
+    private GameObject[] spawnPoint;
+
+    [Header("BGM")]
+    [SerializeField]
+    private AudioClip bgmSound;
+    private AudioSource BGM;
+    private PlayableDirector cut;
+    public bool isReady = true;
+
     void Start()
     {
         instance = this;
         curruntShootDelay = 0;
+
+        cut = GetComponent<PlayableDirector>();
+        cut.Play();
         InitBullet();
+
     }
 
     // Update is called once per frame
@@ -97,5 +113,29 @@ public class GameManager : MonoBehaviour
     private void SetObjPosition(GameObject obj, Transform targetTransform)
     {
         obj.transform.position = targetTransform.position;
+    }
+
+    IEnumerator EnemySpwan()
+    {
+        yield return new WaitForSeconds(2f);
+        //Instantiate(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform.position, Quaternion.identity);
+        GameObject enemy = PoolManager.instance.ActivateObj(4);
+        SetObjPosition(enemy, spawnPoint[Random.Range(0, spawnPoint.Length)].transform);
+        yield return new WaitForSeconds(2f);
+
+        
+    }
+    private void PlayBGMSound()
+    {
+        BGM = GetComponent<AudioSource>();
+        BGM.clip = bgmSound;
+        BGM.loop = true;
+        BGM.Play();
+    }
+    public void StartGame()
+    {
+        isReady = false;
+        PlayBGMSound();
+        StartCoroutine(EnemySpwan());
     }
 }
